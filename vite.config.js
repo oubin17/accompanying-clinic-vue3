@@ -17,4 +17,9 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
   ],
+  // resolve: {
+  //   alias: {
+  //     '@': path.resolve(__dirname, './src'),
+  //   },
+  // },
 })

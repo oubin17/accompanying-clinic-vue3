@@ -2,9 +2,11 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import router from './router'
+import { createPinia } from 'pinia'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
+const pinia = createPinia()
 
 //导入el-icon
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -13,4 +15,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 //路由挂载
 app.use(router)
-  .mount('#app')
+app.use(pinia)
+
+app.mount('#app')

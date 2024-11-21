@@ -14,6 +14,7 @@ const routes = [
   {
     path: '/',
     component: Layout,
+    name: 'main',
     children: [
       {
         path: 'dashboard',
@@ -22,9 +23,10 @@ const routes = [
           name: '控制台',
           icon: 'Platform',
           path: '/dashboard',
-          describe: '用于展示当前系统中的统计数据、统计报表',
-          component: Dashboard
-        }
+          describe: '用于展示当前系统中的统计数据、统计报表'
+
+        },
+        component: Dashboard
       },
       {
         path: 'auth',
@@ -43,10 +45,10 @@ const routes = [
               name: '账号管理',
               icon: 'Avatar',
               path: '/auth/admin',
-              describe: '管理员可以进行编辑，权限修改后需要重新登录',
-              component: Admin
+              describe: '管理员可以进行编辑，权限修改后需要重新登录'
+            },
+            component: Admin
 
-            }
           },
           {
             path: 'group',
@@ -55,9 +57,9 @@ const routes = [
               name: '菜单管理',
               icon: 'Menu',
               path: '/auth/group',
-              describe: '菜单规则通常对应一个控制器方法',
-              component: Group
-            }
+              describe: '菜单规则通常对应一个控制器方法'
+            },
+            component: Group
           }
         ]
 
@@ -80,10 +82,9 @@ const routes = [
               name: '陪护管理',
               icon: 'Avatar',
               path: '/vppz/order',
-              describe: '陪护管理',
-              component: Staff
-
-            }
+              describe: '陪护管理'
+            },
+            component: Staff
           },
           {
             path: 'staff',
@@ -93,10 +94,9 @@ const routes = [
               name: '订单管理',
               icon: 'Location',
               path: '/vppz/staff',
-              describe: '订单管理',
-              component: Order
-
-            }
+              describe: '订单管理'
+            },
+            component: Order
           }
 
         ]
