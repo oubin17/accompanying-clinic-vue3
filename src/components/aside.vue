@@ -11,7 +11,7 @@
 import TreeMenu from './treeMenu.vue'
 import { useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
-import { useMenuStore } from '../stores/index.js'
+import { useMenuStore } from '@/stores/index.js'
 const menuStore = useMenuStore()
 const isCollapse = computed(() => menuStore.state.isCollapse)
 

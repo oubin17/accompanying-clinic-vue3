@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { useMenuStore } from '../stores/index.js'
+import { useMenuStore } from '@/stores/index.js'
 const menuStore = useMenuStore()
 const { collapseMenu } = menuStore;
 
