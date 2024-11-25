@@ -26,13 +26,20 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useMenuStore } from '@/stores/index.js'
+
+
 const props = defineProps(['menuData', 'index'])
+
 
 //创建router实例
 const router = useRouter()
+
+const menuStore = useMenuStore()
+
 //点击菜单
 const handleClick = (item, active) => {
-
+  menuStore.addMenu(item.meta)
   router.push(item.meta.path)
 }
 </script>

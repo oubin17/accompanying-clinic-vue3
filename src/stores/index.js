@@ -10,11 +10,25 @@ export const useMenuStore = defineStore('menu', () => {
     selectMenu: []
   });
   const collapseMenu = () => {
-    console.log(123)
 
     state.isCollapse = !state.isCollapse
 
   };
 
-  return { state, collapseMenu }
+  const addMenu = (payload) => {
+    //对数据去重
+    if (state.selectMenu.findIndex(item => item.path === payload.path) === -1) {
+      state.selectMenu.push(payload)
+    }
+
+  }
+
+  const closeMenu = (payload) => {
+    //找到点击数据的索引
+    const index = state.selectMenu.findIndex(val => val.name === payload.name)
+    //通过索引删除数组指定元素
+    state.selectMenu.splice(index, 1)
+  }
+
+  return { state, collapseMenu, addMenu, closeMenu }
 })

@@ -1,7 +1,8 @@
 <template>
-  <el-menu :style="{ width: '230px' }" active-text-color="#ffd04b" background-color="#545c64" class="aside-container"
-    default-active="2" text-color="#fff" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-    <p class="logo-lg">DIDI陪诊</p>
+  <el-menu :style="{ width: isCollapse ? '64px' : '230px' }" active-text-color="#ffd04b" background-color="#545c64"
+    class="aside-container" default-active="2" text-color="#fff" @open="handleOpen" @close="handleClose"
+    :collapse="isCollapse">
+    <p class="logo-lg">{{ isCollapse ? 'DIDI' : 'DIDI陪诊' }}</p>
     <TreeMenu :index="1" :menuData="menuData"></TreeMenu>
 
   </el-menu>
