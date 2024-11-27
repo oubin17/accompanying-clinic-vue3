@@ -80,7 +80,7 @@ const routes = [
             meta: {
               id: '2',
               name: '陪护管理',
-              icon: 'Avatar',
+              icon: 'Odometer',
               path: '/vppz/order',
               describe: '陪护管理'
             },
