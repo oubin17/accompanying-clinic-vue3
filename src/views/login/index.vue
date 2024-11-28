@@ -9,15 +9,15 @@
       <div class="jump-link"><el-link type="primary" @click="handleChange">{{ formType ? '返回登录' : '注册账号' }}</el-link>
       </div>
 
-      <el-form :model="loginForm" style="max-width: 600px" class="demo-ruleForm" :rules="rules">
+      <el-form ref="loginFormRef" :model="loginForm" style="max-width: 600px" class="demo-ruleForm" :rules="rules">
         <el-form-item prop="loginId">
-          <el-input v-model="loginForm.loginId" placeholder="手机号" :prefix-icon="UserFilled"></el-input>
+          <el-input v-model="loginForm.loginId" placeholder="手机号" :prefix-icon="Cellphone"></el-input>
         </el-form-item>
         <el-form-item v-if="formType" prop="userName">
           <el-input v-model="loginForm.userName" placeholder="用户名称" :prefix-icon="UserFilled"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" type="password" placeholder="密码" :prefix-icon="Lock"></el-input>
+          <el-input v-model="loginForm.identifyValue" type="password" placeholder="密码" :prefix-icon="Lock"></el-input>
         </el-form-item>
         <el-form-item v-if="formType" prop="validCode">
           <el-input v-model="loginForm.validCode" placeholder="验证码" :prefix-icon="Lock">
@@ -28,7 +28,7 @@
 
         </el-form-item>
         <el-form-item prop="validCode">
-          <el-button type="primary" :style="{ width: '100%' }" @click="submitForm">
+          <el-button type="primary" :style="{ width: '100%' }" @click="submitForm(loginFormRef)">
 
             {{ formType ? '注册账号' : '登录' }}
           </el-button>
@@ -42,16 +42,20 @@
 </template>
 
 <script setup>
-import { tr } from 'element-plus/es/locales.mjs';
 import { ref, reactive } from 'vue'
+import { getCode, userRegister, userLogin } from '../../api'
+//需要引入字体图标库，否则不展示
+import { UserFilled, Lock, Cellphone } from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
 const imgUrl = new URL('../../../public/login-head.png', import.meta.url).href
 
 
 const loginForm = reactive({
   loginId: '',
-  loginType: '',
+  loginType: '1',
   userName: '',
-  password: '',
+  identifyType: '1',
+  identifyValue: '',
   validCode: ''
 })
 
@@ -118,11 +122,13 @@ const countDownChange = () => {
   }
 
   //倒计时
-  setInterval(() => {
+  const time = setInterval(() => {
     if (countDown.value.time <= 0) {
       countDown.value.time = 60
       countDown.value.validText = '获取验证码'
       flag = false
+      //定时器清除，否则会一直在循环
+      clearInterval(time)
     } else {
       countDown.value.time -= 1
       countDown.value.validText = `剩余${countDown.value.time}s`
@@ -130,11 +136,48 @@ const countDownChange = () => {
 
   }, 1000)
   flag = true
+  getCode({ mobileNo: loginForm.loginId }).then(({ data }) => {
+    if (data.success === true) {
+      ElMessage.success('发送成功')
+    }
+  })
 }
 
-//表单提交
-const submitForm = () => {
 
+const router = useRouter()
+const loginFormRef = ref()
+//表单提交
+const submitForm = async (formEl) => {
+  if (!formEl) return
+  //手动触发表单校验
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+
+      if (formType.value) {
+        //注册页面
+        userRegister(loginForm).then(({ data }) => {
+          if (data.success === true) {
+            ElMessage.success('注册成功，请登录')
+            formType.value = 0
+          }
+        })
+      } else {
+        //登录页面
+        userLogin(loginForm).then(({ data }) => {
+          if (data.success === true) {
+            ElMessage.success('登录成功')
+            //保存token和用户信息
+            localStorage.setItem('odk-token', data.data.token)
+            //这里需要序列化，转成字符串
+            localStorage.setItem('userInfo', JSON.stringify(data.data))
+            router.push('/')
+          }
+        })
+      }
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
 }
 </script>
 
