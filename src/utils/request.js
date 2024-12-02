@@ -21,6 +21,7 @@ http.interceptors.request.use(function (config) {
 });
 
 // 添加响应拦截器
+const tokenExceptionCode = ['020', '021', '022']
 http.interceptors.response.use(function (response) {
 
   //对接口异常的数据，给用户提示
@@ -33,6 +34,15 @@ http.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   // 超出 2xx 范围的状态码都会触发该函数。
+
+  const errorCode = error.response?.data?.errorCode;
+  if (tokenExceptionCode.includes(errorCode)) {
+    localStorage.removeItem('odk-token')
+    localStorage.removeItem('userInfo')
+    window.location.href = window.location.origin
+  }
+
+
   // 对响应错误做点什么
   return Promise.reject(error);
 });

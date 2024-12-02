@@ -16,3 +16,7 @@ export const userRegister = (data) => {
 export const userLogin = (data) => {
   return request.post('/user/login', data)
 }
+
+export const userPermission = (params) => {
+  return request.get('/permission/list', { params })
+}
