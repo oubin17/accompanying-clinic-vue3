@@ -43,10 +43,12 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { getCode, userRegister, userLogin } from '../../api'
+import { getCode, userRegister, userLogin, userPermission } from '../../api'
 //需要引入字体图标库，否则不展示
 import { UserFilled, Lock, Cellphone } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
+import { useMenuStore } from '@/stores/index.js'
+
 const imgUrl = new URL('../../../public/login-head.png', import.meta.url).href
 
 
@@ -146,6 +148,9 @@ const countDownChange = () => {
 
 const router = useRouter()
 const loginFormRef = ref()
+
+const menuStore = useMenuStore()
+
 //表单提交
 const submitForm = async (formEl) => {
   if (!formEl) return
@@ -170,7 +175,13 @@ const submitForm = async (formEl) => {
             localStorage.setItem('odk-token', data.data.token)
             //这里需要序列化，转成字符串
             localStorage.setItem('userInfo', JSON.stringify(data.data))
-            router.push('/')
+
+            //还需要获取菜单权限
+            userPermission({ userId: data.data.userId }).then(({ data }) => {
+              router.push('/')
+              menuStore.dynamicMenu(data.data)
+            })
+
           }
         })
       }

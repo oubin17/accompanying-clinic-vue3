@@ -30,5 +30,12 @@ export const useMenuStore = defineStore('menu', () => {
     state.selectMenu.splice(index, 1)
   }
 
-  return { state, collapseMenu, addMenu, closeMenu }
+  const dynamicMenu = (payload) => {
+    //通过glob导入文件
+    const modules = import.meta.glob('../views/**/**/*.vue')
+
+    console.log(modules)
+  }
+
+  return { state, collapseMenu, addMenu, closeMenu, dynamicMenu }
 })

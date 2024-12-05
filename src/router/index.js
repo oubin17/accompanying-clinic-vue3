@@ -23,7 +23,8 @@ const routes = [
           name: '控制台',
           icon: 'Platform',
           path: '/dashboard',
-          describe: '用于展示当前系统中的统计数据、统计报表'
+          describe: '用于展示当前系统中的统计数据、统计报表',
+          code: 'CONSOLE_DESK'
 
         },
         component: Dashboard
@@ -33,7 +34,8 @@ const routes = [
         meta: {
           id: '2',
           name: '权限管理',
-          icon: 'Grid'
+          icon: 'Grid',
+          code: 'RIGHTS'
 
         },
         children: [
@@ -45,7 +47,8 @@ const routes = [
               name: '账号管理',
               icon: 'Avatar',
               path: '/auth/admin',
-              describe: '管理员可以进行编辑，权限修改后需要重新登录'
+              describe: '管理员可以进行编辑，权限修改后需要重新登录',
+              code: 'ACCOUNT'
             },
             component: Admin
 
@@ -57,7 +60,8 @@ const routes = [
               name: '菜单管理',
               icon: 'Menu',
               path: '/auth/group',
-              describe: '菜单规则通常对应一个控制器方法'
+              describe: '菜单规则通常对应一个控制器方法',
+              code: 'MENU'
             },
             component: Group
           }
@@ -69,7 +73,8 @@ const routes = [
         meta: {
           id: '3',
           name: 'DIDI陪诊',
-          icon: 'BellFilled'
+          icon: 'BellFilled',
+          code: 'DIDI'
 
         },
         children: [
@@ -82,7 +87,8 @@ const routes = [
               name: '陪护管理',
               icon: 'Odometer',
               path: '/vppz/order',
-              describe: '陪护管理'
+              describe: '陪护管理',
+              code: 'ACCOMPANY'
             },
             component: Staff
           },
@@ -94,7 +100,8 @@ const routes = [
               name: '订单管理',
               icon: 'Location',
               path: '/vppz/staff',
-              describe: '订单管理'
+              describe: '订单管理',
+              code: 'ORDER'
             },
             component: Order
           }

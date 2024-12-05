@@ -19,25 +19,16 @@
       </ul>
     </div>
     <div class="header-right">
-      <el-dropdown>
+      <el-dropdown @command="handleClick">
         <div class="el-dropdown-link flex-box">
           <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-          <p class="user-name">admin</p>
+          <p class="user-name">{{ userInfo.userName }}</p>
         </div>
 
-        <!-- <span class="el-dropdown-link">
-          Dropdown List
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </span> -->
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>Action 1</el-dropdown-item>
-            <el-dropdown-item>Action 2</el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item disabled>Action 4</el-dropdown-item>
-            <el-dropdown-item divided>Action 5</el-dropdown-item>
+            <el-dropdown-item command="cancel">退出</el-dropdown-item>
+
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -57,6 +48,9 @@ const menuStore = useMenuStore()
 const { state, collapseMenu, closeMenu } = menuStore;
 
 const selectMenu = computed(() => state.selectMenu)
+
+const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+
 
 //当前路由对象
 const route = useRoute()
@@ -85,6 +79,16 @@ const closeTab = (item, index) => {
     router.push({
       path: selectMenuDate[index].path
     })
+  }
+}
+
+const handleClick = (command) => {
+
+  if (command === 'cancel') {
+    localStorage.removeItem('odk-token')
+    localStorage.removeItem('userInfo')
+
+    window.location.href = window.location.origin
   }
 }
 

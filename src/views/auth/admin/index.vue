@@ -8,7 +8,7 @@ import { userPermission } from '../../../api'
 import { onMounted, reactive } from 'vue'
 
 const pageData = reactive({
-  pageNum: 0,
+  pageNo: 1,
   pageSize: 10
 })
 

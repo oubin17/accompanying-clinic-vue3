@@ -23,7 +23,7 @@ export const userPermission = (params) => {
 }
 
 //系统所有角色
-export const allRole = (params) => {
+export const roleList = (params) => {
   return request.get('/permission/list', { params })
 }
 

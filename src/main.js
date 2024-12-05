@@ -5,6 +5,8 @@ import router from './router'
 import { createPinia } from 'pinia'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
+import PanelHead from './components/panelHead.vue'
+
 const app = createApp(App)
 const pinia = createPinia()
 
@@ -26,6 +28,8 @@ router.beforeEach((to, from) => {
   }
 })
 
+//组件全局注入
+app.component('PanelHead', PanelHead)
 //路由挂载
 app.use(router)
 app.use(pinia)
